@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Todo App</title>
+</head>
+
+<body>
+    <h1>Welcome</h1>
+    <button onclick="postData()">Click Me</button>
+    <ul id="items"></ul>
+
+
+    <script>
+        const ul = document.getElementById('items');
+
+        function postData() {
+            const data = {
+                name: 'Todo',
+                status: 'unchecked'
+            };
+
+            fetch('http://localhost:6969/add', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+            })
+                .then(res => res.json())
+                .then(data => {
+                    const li = document.createElement('li');
+                    li.textContent = data.name;
+                    ul.appendChild(li);
+                })
+                .catch(err => console.log("JSON FAILED PARSING!!!!!!!!", err));
+        }
+    </script>
+</body>
+
+</html>
